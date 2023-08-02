@@ -5,4 +5,12 @@
     <select id="selectUserByPhoneNumber" resultType="User">
         select * from user where phone = #{phoneNumber}
     </select>
+
+    <select id="selectUserByUserName" resultType="User">
+        select * from user where username = #{userName}
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        insert into user(phone,username,password,gender,avatarImgUrl) values (#{phone},#{username},#{password},#{gender},#{avatarImgUrl})
+    </insert>
 </mapper>
