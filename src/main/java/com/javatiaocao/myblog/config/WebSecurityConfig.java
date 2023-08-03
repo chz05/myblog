@@ -1,5 +1,6 @@
 package com.javatiaocao.myblog.config;
 
+import com.javatiaocao.myblog.service.UserDetailsServiceImp;
 import com.javatiaocao.myblog.utils.MD5Util;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,29 +20,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Bean
-//    UserDetailsService customUserService(){
-//        return new CustomUserServiceImpl();
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(customUserService())
-//            //启动MD5加密
-//            .passwordEncoder(new PasswordEncoder() {
-//                MD5Util md5Util = new MD5Util();
-//                @Override
-//                public String encode(CharSequence rawPassword) {
-//                    return md5Util.encode((String) rawPassword);
-//                }
-//
-//                @Override
-//                public boolean matches(CharSequence rawPassword, String encodedPassword) {
-//                    return encodedPassword.equals(md5Util.encode((String)rawPassword));
-//                }
-//            });
-//
-//    }
+    @Bean
+    UserDetailsService userDetailsService1(){
+        return new UserDetailsServiceImp();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService1())
+            //启动MD5加密
+            .passwordEncoder(new PasswordEncoder() {
+                MD5Util md5Util = new MD5Util();
+                @Override
+                public String encode(CharSequence rawPassword) {
+                    return md5Util.encode((String) rawPassword);
+                }
+
+                @Override
+                public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                    return encodedPassword.equals(md5Util.encode((String)rawPassword));
+                }
+            });
+
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

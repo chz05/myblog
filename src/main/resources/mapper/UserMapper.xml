@@ -17,4 +17,12 @@
     <insert id="insertUserRole">
         insert into user_role(User_id, Role_id) values (#{userID}, #{RoleID})
     </insert>
+
+    <update id="updateRecentlyLanded">
+        update user set RecentlyLanded = #{RecentlyLandedTime} where phone = #{phone}
+    </update>
+
+    <select id="selectRoleByUserPhone" resultType="Role">
+        select * from role where id in (select ur.Role_id from user u join user_role ur on u.id = ur.User_id where u.phone = #{phone})
+    </select>
 </mapper>
