@@ -1,6 +1,7 @@
 package com.javatiaocao.myblog.service;
 
 import com.javatiaocao.myblog.constant.CodeType;
+import com.javatiaocao.myblog.constant.RoleType;
 import com.javatiaocao.myblog.mapper.UserMapper;
 import com.javatiaocao.myblog.model.User;
 import com.javatiaocao.myblog.utils.DataMap;
@@ -45,8 +46,11 @@ public class UserServiceImp implements UserService{
         }
 
         user.setAvatarImgUrl("www.javatiaocao.com");
+
+        //insert into user_role table with default Role_id = 1 (ROLE_USER)
         userMapper.insertUser(user);
 
+        userMapper.insertUserRole(user.getId(), RoleType.ROLE_USER.getRoleID());
         return DataMap.success();
     }
 

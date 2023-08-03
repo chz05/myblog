@@ -69,6 +69,8 @@ public class User {
      */
     private String avatarImgUrl;
 
+    private List<Role> RoleList;
+
     public User(String phone, String username, String password, String gender) {
         this.phone = phone;
         this.username = username;

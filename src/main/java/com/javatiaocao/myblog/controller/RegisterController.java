@@ -7,6 +7,7 @@ import com.javatiaocao.myblog.utils.DataMap;
 import com.javatiaocao.myblog.utils.JsonResult;
 import com.javatiaocao.myblog.utils.MD5Util;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +28,7 @@ public class RegisterController {
     @Resource
     private UserService userService;
     @PostMapping("/register")
+    @Transactional
     public String register(User user, HttpServletResponse response){
         //check the username whether exist or not
         try{

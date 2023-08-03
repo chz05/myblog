@@ -10,7 +10,11 @@
         select * from user where username = #{userName}
     </select>
 
-    <insert id="insertUser" parameterType="User">
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         insert into user(phone,username,password,gender,avatarImgUrl) values (#{phone},#{username},#{password},#{gender},#{avatarImgUrl})
+    </insert>
+
+    <insert id="insertUserRole">
+        insert into user_role(User_id, Role_id) values (#{userID}, #{RoleID})
     </insert>
 </mapper>
