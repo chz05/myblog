@@ -5,4 +5,20 @@
     <select id="selectAllCategories" resultType="Categories">
         select * from categories
     </select>
+    
+    <select id="selectCategoryByCategoryName" resultType="Categories">
+        select * from categories where categoryName = #{categoryName}
+    </select>
+
+    <insert id="insertCategory" parameterType="Categories">
+        insert into categories(categoryName) values (#{categoryName})
+    </insert>
+
+    <select id="selectArticlesByCategoryName" resultType="Article">
+        select * from article where articleCategories = #{articleCategories}
+    </select>
+
+    <delete id="DeleteCategory">
+        delete from categories where categoryName = #{categoryName}
+    </delete>
 </mapper>

@@ -11,4 +11,8 @@ import org.springframework.stereotype.Service;
 
 public interface CategoriesService {
     DataMap getAllCategories();
+
+    DataMap addCategory(String categoryName);
+
+    DataMap removeCategory(String categoryName);
 }

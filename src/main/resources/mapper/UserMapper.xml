@@ -25,4 +25,5 @@
     <select id="selectRoleByUserPhone" resultType="Role">
         select * from role where id in (select ur.Role_id from user u join user_role ur on u.id = ur.User_id where u.phone = #{phone})
     </select>
+
 </mapper>
