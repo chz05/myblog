@@ -1,5 +1,7 @@
 package com.javatiaocao.myblog.controller;
 
+import com.javatiaocao.myblog.utils.StringUtil;
+import com.javatiaocao.myblog.utils.TransCodingUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -101,15 +103,15 @@ public class BackControl {
     /**
      * 跳转到文章编辑页
      */
-//    @GetMapping("/editor")
-//    public String editor(HttpServletRequest request){
-//        request.getSession().removeAttribute("lastUrl");
-//        String id = request.getParameter("id");
-//        if(!StringUtil.BLANK.equals(id)){
-//            request.getSession().setAttribute("id", id);
-//        }
-//        return "editor";
-//    }
+    @GetMapping("/editor")
+    public String editor(HttpServletRequest request){
+        request.getSession().removeAttribute("lastUrl");
+        String id = request.getParameter("id");
+        if(!StringUtil.BLANK.equals(id)){
+            request.getSession().setAttribute("id", id);
+        }
+        return "editor";
+    }
 
     /**
      * 跳转到文章显示页
@@ -159,20 +161,20 @@ public class BackControl {
     /**
      * 跳转到分类页
      */
-//    @GetMapping("/categories")
-//    public String categories(HttpServletResponse response,
-//                             HttpServletRequest request){
-//        response.setCharacterEncoding("utf-8");
-//        response.setContentType("text/html;charset=utf-8");
-//        request.getSession().removeAttribute("lastUrl");
-//        String category = request.getParameter("category");
-//
-//        if(category != null && !category.equals(StringUtil.BLANK)){
-//            response.setHeader("category", TransCodingUtil.stringToUnicode(category));
-//        }
-//
-//        return "categories";
-//    }
+    @GetMapping("/categories")
+    public String categories(HttpServletResponse response,
+                             HttpServletRequest request){
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        request.getSession().removeAttribute("lastUrl");
+        String category = request.getParameter("category");
+
+        if(category != null && !category.equals(StringUtil.BLANK)){
+            response.setHeader("category", TransCodingUtil.stringToUnicode(category));
+        }
+
+        return "categories";
+    }
 
     /**
      * 跳转到标签页
