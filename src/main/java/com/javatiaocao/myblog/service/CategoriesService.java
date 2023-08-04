@@ -15,4 +15,6 @@ public interface CategoriesService {
     DataMap addCategory(String categoryName);
 
     DataMap removeCategory(String categoryName);
+
+    DataMap findCategoriesName();
 }

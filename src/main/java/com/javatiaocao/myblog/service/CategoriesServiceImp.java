@@ -10,7 +10,7 @@ import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName CategoriesServiceImp.java
@@ -60,5 +60,15 @@ public class CategoriesServiceImp implements CategoriesService{
         }
         categoriesMapper.DeleteCategory(categoryName);
         return DataMap.success(CodeType.DELETE_CATEGORY_SUCCESS);
+    }
+
+    @Override
+    public DataMap findCategoriesName() {
+        List<Categories> categories = categoriesMapper.selectAllCategories();
+        List<String> categoriesName = new ArrayList<String>();
+        for (Categories category : categories) {
+            categoriesName.add(category.getCategoryName());
+        }
+        return DataMap.success().setData(categoriesName);
     }
 }

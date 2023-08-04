@@ -44,7 +44,7 @@ public class CategoriesController {
      * @createTime 2023/08/03
      */
     @Transactional
-    @PostMapping("updateCategory")
+    @PostMapping("/updateCategory")
     public String updateCategory(String categoryName, int type){
         try{
             //401 success add. if we wanna add.
@@ -62,5 +62,20 @@ public class CategoriesController {
 
         return JsonResult.fail(CodeType.SERVER_EXCEPTION).toJSON();
     }
+
+    @GetMapping("/findCategoriesName")
+    public String findCategoriesName(){
+        try{
+            DataMap data = null;
+            data = categoriesService.findCategoriesName();
+            return JsonResult.build(data).toJSON();
+        }catch (Exception e){
+            log.error("CategoriesController findCategoriesName exception", e);
+        }
+
+        return JsonResult.fail(CodeType.SERVER_EXCEPTION).toJSON();
+    }
+
+
 
 }
