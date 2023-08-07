@@ -21,4 +21,6 @@ public interface ArticleMapper {
     void insertTags(@Param("tagName") String tagName, @Param("tagSize") String tagSize);
 
     void insertArticle(Article article);
+
+    List<Article> selectAllArticles();
 }

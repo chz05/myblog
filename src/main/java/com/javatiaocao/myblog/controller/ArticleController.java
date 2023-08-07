@@ -1,5 +1,6 @@
 package com.javatiaocao.myblog.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.javatiaocao.myblog.constant.CodeType;
 import com.javatiaocao.myblog.model.Article;
 import com.javatiaocao.myblog.model.User;
@@ -102,6 +103,17 @@ public class ArticleController {
 
         }catch (Exception e){
             log.error("publish Article Exception", e);
+        }
+        return JsonResult.fail(CodeType.SERVER_EXCEPTION).toJSON();
+    }
+
+    @PostMapping("/getArticleManagement")
+    public String getArticleManagement(Integer rows, Integer pageNum){
+        try {
+            DataMap data = articleService.getArticleManagement(rows, pageNum);
+            return JsonResult.build(data).toJSON();
+        } catch (Exception e){
+            log.error("get article management Exception", e);
         }
         return JsonResult.fail(CodeType.SERVER_EXCEPTION).toJSON();
     }

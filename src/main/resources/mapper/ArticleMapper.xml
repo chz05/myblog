@@ -16,4 +16,8 @@
         #{articleContent}, #{articleTags}, #{articleType}, #{articleCategories}, #{publishDate}, #{updateDate},
         #{articleUrl}, #{articleTabloid})
     </insert>
+
+    <select id="selectAllArticles" resultType="Article">
+        select * from article order by id desc
+    </select>
 </mapper>

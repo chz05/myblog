@@ -12,4 +12,6 @@ public interface ArticleService {
     void insertTags(String newTag, String articleGrade);
 
     DataMap insertArticle(Article article);
+
+    DataMap getArticleManagement(Integer row, Integer currentPage);
 }
