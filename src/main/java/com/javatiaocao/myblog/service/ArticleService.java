@@ -13,5 +13,7 @@ public interface ArticleService {
 
     DataMap insertArticle(Article article);
 
-    DataMap getArticleManagement(Integer row, Integer currentPage);
+    DataMap getArticleManagement(int row, int currentPage);
+
+    DataMap deleteArticle(int id);
 }

@@ -23,4 +23,7 @@ public interface ArticleMapper {
     void insertArticle(Article article);
 
     List<Article> selectAllArticles();
+
+    Article selectArticleById(int id);
+    void deleteArticleById(int id);
 }

@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -108,12 +109,23 @@ public class ArticleController {
     }
 
     @PostMapping("/getArticleManagement")
-    public String getArticleManagement(Integer rows, Integer pageNum){
+    public String getArticleManagement(int rows, int pageNum){
         try {
             DataMap data = articleService.getArticleManagement(rows, pageNum);
             return JsonResult.build(data).toJSON();
         } catch (Exception e){
             log.error("get article management Exception", e);
+        }
+        return JsonResult.fail(CodeType.SERVER_EXCEPTION).toJSON();
+    }
+
+    @GetMapping("/deleteArticle")
+    public String deleteArticle(String id){
+        try {
+            DataMap data = articleService.deleteArticle(Integer.parseInt(id));
+            return JsonResult.build(data).toJSON();
+        } catch (Exception e){
+            log.error("delete article Exception", e);
         }
         return JsonResult.fail(CodeType.SERVER_EXCEPTION).toJSON();
     }

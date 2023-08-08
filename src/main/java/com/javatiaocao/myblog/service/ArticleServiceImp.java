@@ -4,12 +4,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.javatiaocao.myblog.constant.CodeType;
 import com.javatiaocao.myblog.mapper.ArticleMapper;
 import com.javatiaocao.myblog.model.Article;
 import com.javatiaocao.myblog.model.Tags;
 import com.javatiaocao.myblog.utils.DataMap;
 import com.javatiaocao.myblog.utils.StringUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.swing.*;
@@ -22,7 +24,7 @@ import java.util.List;
  * @createTime 2023/08/05
  */
 @Service
-public class ArticleServiceImp implements  ArticleService{
+public class ArticleServiceImp implements ArticleService{
     @Resource
     private ArticleMapper articleMapper;
     @Override
@@ -50,11 +52,11 @@ public class ArticleServiceImp implements  ArticleService{
     }
 
     @Override
-    public DataMap getArticleManagement(Integer row, Integer currentPage) {
-        List<Article> articles = articleMapper.selectAllArticles();
+    public DataMap getArticleManagement(int row, int currentPage) {
         PageHelper.startPage(currentPage, row);
+        List<Article> articles = articleMapper.selectAllArticles();
         PageInfo<Article> articlePageInfo = new PageInfo<>(articles);
-
+        articlePageInfo.setPageSize(10);
         // need the [Data][pageInfo][pageSize] pageNum, pages, total
         // result -> need the id, articleId, articleTitle, publishDate, articleCategories, visitorNum(now just give a number)
         JSONObject resultJson = new JSONObject();
@@ -80,9 +82,29 @@ public class ArticleServiceImp implements  ArticleService{
         return DataMap.success().setData(resultJson);
     }
 
+    @Override
+    @Transactional
+    public DataMap deleteArticle(int id) {
+        if (!IsArticleExist(id)){
+            return DataMap.fail(CodeType.DELETE_ARTICLE_FAIL);
+        }
+        //still need to update the nextArticleId and lastArticleId for other articles.
+
+        articleMapper.deleteArticleById(id);
+        return DataMap.success();
+    }
+
     private boolean IsTagExist(String tagName){
         List<Tags> tags = articleMapper.selectTagByTagName(tagName);
         if (tags.size() != 0){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean IsArticleExist(int id){
+        Article article = articleMapper.selectArticleById(id);
+        if (article != null){
             return true;
         }
         return false;

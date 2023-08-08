@@ -20,4 +20,12 @@
     <select id="selectAllArticles" resultType="Article">
         select * from article order by id desc
     </select>
+
+    <delete id="deleteArticleById">
+        delete from article where id = #{id}
+    </delete>
+
+    <select id="selectArticleById" resultType="Article">
+        select * from article where id = #{id}
+    </select>
 </mapper>
