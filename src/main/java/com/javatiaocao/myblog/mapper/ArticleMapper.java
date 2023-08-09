@@ -25,5 +25,9 @@ public interface ArticleMapper {
     List<Article> selectAllArticles();
 
     Article selectArticleById(int id);
+
+    Article selectArticleByArticleId(long articleId);
     void deleteArticleById(int id);
+
+    void updateArticle(Article article);
 }

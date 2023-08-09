@@ -89,7 +89,34 @@ public class ArticleServiceImp implements ArticleService{
             return DataMap.fail(CodeType.DELETE_ARTICLE_FAIL);
         }
         //still need to update the nextArticleId and lastArticleId for other articles.
+        Article article = articleMapper.selectArticleById(id);
+        long nextArticleId = article.getNextArticleId();
+        long lastArticleId = article.getLastArticleId();
 
+        Article nextArticle = articleMapper.selectArticleByArticleId(nextArticleId);
+        Article lastArticle = articleMapper.selectArticleByArticleId(lastArticleId);
+        if (lastArticle == null){
+            //this article is the first article and we want to remove it.
+            if (nextArticle == null){
+                //next article is null, we only have one article and we remove it. we do not need to do anything.
+            }else{
+                //next article is not null.
+                nextArticle.setLastArticleId(0);
+                articleMapper.updateArticle(nextArticle);
+            }
+        }else {
+            if (nextArticle == null){
+                //last article will be the real last article.
+                lastArticle.setNextArticleId(0);
+                articleMapper.updateArticle(lastArticle);
+            }else{
+                //next article is not null.
+                nextArticle.setLastArticleId(lastArticleId);
+                lastArticle.setNextArticleId(nextArticleId);
+                articleMapper.updateArticle(nextArticle);
+                articleMapper.updateArticle(lastArticle);
+            }
+        }
         articleMapper.deleteArticleById(id);
         return DataMap.success();
     }

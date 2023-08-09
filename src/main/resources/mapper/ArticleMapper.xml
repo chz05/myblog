@@ -28,4 +28,17 @@
     <select id="selectArticleById" resultType="Article">
         select * from article where id = #{id}
     </select>
+
+    <select id="selectArticleByArticleId" resultType="Article">
+        select * from article where articleId = #{articleId}
+    </select>
+
+    <update id="updateArticle">
+        update article
+        <set>
+            <if test="lastArticleId != null and lastArticleId != ''">lastArticleId = #{lastArticleId}</if>
+            <if test="nextArticleId != null and nextArticleId != ''">nextArticleId = #{nextArticleId}</if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
